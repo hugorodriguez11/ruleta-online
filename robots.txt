@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ruletaonline.vercel.app/sitemap.xml
+Sitemap: https://ruleta-online.vercel.app/sitemap.xml
