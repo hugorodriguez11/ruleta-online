@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO PRIMARY -->
+  <title>RuletaOnline — Ruleta gratis, Intercambios y Números aleatorios</title>
+  <meta name="description" content="Herramienta gratuita para girar una ruleta online, organizar intercambios de regalos secretos y generar números aleatorios. Sin registro, sin descargas. Ideal para sorteos, juegos y dinámicas de grupo." />
+  <meta name="keywords" content="ruleta online, ruleta gratis, intercambio de regalos, amigo secreto, números aleatorios, sorteo online, ruleta giratoria, generador aleatorio, sorteos gratis, ruleta virtual" />
+  <meta name="author" content="RuletaOnline" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://ruletaonline.vercel.app/" />
+
+  <!-- OPEN GRAPH (para compartir en redes sociales) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ruletaonline.vercel.app/" />
+  <meta property="og:title" content="RuletaOnline — Ruleta gratis, Intercambios y Números aleatorios" />
+  <meta property="og:description" content="Gira una ruleta online, organiza intercambios secretos y genera números aleatorios. Gratis, sin registro y sin descargas." />
+  <meta property="og:locale" content="es_MX" />
+
+  <!-- TWITTER CARD -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="RuletaOnline — Ruleta gratis y Sorteos online" />
+  <meta name="twitter:description" content="Ruleta online gratis, intercambios secretos y generador de números aleatorios. Sin registro." />
+
+  <!-- STRUCTURED DATA (Schema.org para Google) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "RuletaOnline",
+    "description": "Herramienta gratuita para girar una ruleta online, organizar intercambios de regalos secretos y generar números aleatorios.",
+    "url": "https://ruletaonline.vercel.app/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "MXN"
+    },
+    "inLanguage": "es",
+    "audience": {
+      "@type": "Audience",
+      "geographicArea": "Latinoamérica"
+    }
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --c1: #7F77DD; --c1l: #EEEDFE; --c1d: #3C3489;
+      --c2: #1D9E75; --c2l: #E1F5EE; --c2d: #085041;
+      --c5: #378ADD; --c5l: #E6F1FB; --c5d: #0C447C;
+      --bg: #f7f7f5; --card: #ffffff; --border: rgba(0,0,0,0.1);
+      --text: #1a1a1a; --muted: #666; --radius: 14px;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+    header { background: #fff; border-bottom: 0.5px solid var(--border); padding: 1rem 1.5rem; display: flex; align-items: center; gap: 12px; }
+    header h1 { font-size: 18px; font-weight: 700; color: var(--c1); }
+    header span { font-size: 13px; color: var(--muted); }
+    .container { max-width: 600px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+    .nav { display: flex; gap: 6px; margin-bottom: 1.5rem; padding: 5px; background: #fff; border-radius: 14px; border: 0.5px solid var(--border); }
+    .nav-btn { flex: 1; padding: 9px 6px; border-radius: 10px; border: none; background: transparent; color: var(--muted); cursor: pointer; font-size: 13px; font-weight: 500; transition: all 0.18s; }
+    .nav-btn.active { color: #fff; }
+    .nav-btn:nth-child(1).active { background: var(--c1); }
+    .nav-btn:nth-child(2).active { background: var(--c2); }
+    .nav-btn:nth-child(3).active { background: var(--c5); }
+    .nav-btn:nth-child(4).active { background: var(--muted); }
+    .panel { display: none; } .panel.active { display: block; }
+    .card { background: var(--card); border-radius: var(--radius); border: 0.5px solid var(--border); padding: 1rem 1.25rem; margin-bottom: 12px; }
+    .sec-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 10px; }
+    input[type=text], input[type=number], textarea { width: 100%; padding: 9px 12px; border-radius: 10px; border: 0.5px solid rgba(0,0,0,0.15); background: #fff; color: var(--text); font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.15s; }
+    input:focus, textarea:focus { border-color: var(--c1); }
+    textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+    .row { display: flex; gap: 8px; align-items: center; }
+    .pill-btn { padding: 8px 16px; border-radius: 10px; border: 0.5px solid var(--border); background: #fff; color: var(--text); cursor: pointer; font-size: 14px; font-family: inherit; transition: background 0.12s; white-space: nowrap; }
+    .pill-btn:hover { background: var(--bg); }
+    .seg { display: flex; border-radius: 10px; border: 0.5px solid rgba(0,0,0,0.15); overflow: hidden; margin-bottom: 12px; }
+    .seg-opt { flex: 1; padding: 8px; text-align: center; font-size: 13px; cursor: pointer; color: var(--muted); background: #fff; border: none; font-family: inherit; transition: all 0.15s; border-right: 0.5px solid rgba(0,0,0,0.1); }
+    .seg-opt:last-child { border-right: none; }
+    .seg-opt.on { color: #fff; font-weight: 500; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; min-height: 28px; margin-bottom: 8px; }
+    .chip { display: flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; font-size: 13px; color: #fff; font-weight: 500; }
+    .chip .x { cursor: pointer; opacity: 0.75; font-size: 11px; } .chip .x:hover { opacity: 1; }
+    .spin-btn { border: none; color: #fff; font-size: 15px; font-weight: 600; padding: 12px; border-radius: 12px; cursor: pointer; font-family: inherit; width: 100%; margin-top: 10px; transition: opacity 0.15s; background: var(--c1); letter-spacing: 0.02em; }
+    .spin-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .result-display { border-radius: 12px; padding: 12px 16px; background: var(--c1l); border: 0.5px solid var(--c1); text-align: center; margin-top: 8px; min-height: 46px; display: flex; align-items: center; justify-content: center; }
+    .result-display .winner { font-size: 22px; font-weight: 700; color: var(--c1d); }
+    .result-display .placeholder { font-size: 14px; color: var(--c1); }
+    .hist-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; align-items: center; }
+    .hist-chip { padding: 2px 8px; border-radius: 12px; background: #f0f0ee; border: 0.5px solid var(--border); font-size: 12px; color: var(--muted); text-decoration: line-through; }
+    .group-config { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--c1l); border-radius: 10px; border: 0.5px solid var(--c1); margin-bottom: 10px; flex-wrap: wrap; }
+    .group-config label { font-size: 13px; color: var(--c1d); }
+    .group-config input { width: 70px; padding: 6px 10px; border-radius: 8px; border: 0.5px solid var(--c1); background: #fff; color: var(--c1d); font-size: 14px; text-align: center; }
+    .group-preview { font-size: 12px; color: var(--c1d); margin-left: auto; font-weight: 500; }
+    .group-card { border-radius: 12px; padding: 10px 14px; margin-bottom: 8px; border: 0.5px solid; }
+    .group-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+    .group-members { display: flex; flex-wrap: wrap; gap: 6px; }
+    .gmember { display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+    .order-badge { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
+    .avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .pair-row { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; border: 0.5px solid var(--border); background: var(--bg); margin-bottom: 6px; }
+    .primary-btn { border: none; color: #fff; font-size: 14px; font-weight: 500; padding: 11px; border-radius: 12px; cursor: pointer; font-family: inherit; width: 100%; margin-top: 8px; transition: opacity 0.15s; background: var(--c2); }
+    .primary-btn:hover { opacity: 0.88; }
+    .reveal-btn { padding: 4px 12px; border-radius: 8px; border: 0.5px solid var(--border); background: #fff; cursor: pointer; font-size: 12px; color: var(--muted); font-family: inherit; }
+    .num-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+    .num-field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+    .chk-row { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--muted); cursor: pointer; margin-right: 16px; }
+    .chk-row input { width: 15px; height: 15px; cursor: pointer; accent-color: var(--c5); }
+    .toggle-row { display: flex; flex-wrap: wrap; margin-bottom: 8px; }
+    .gen-btn { background: var(--c5); border: none; color: #fff; font-size: 14px; font-weight: 500; padding: 11px; border-radius: 12px; cursor: pointer; font-family: inherit; width: 100%; margin-top: 4px; transition: opacity 0.15s; }
+    .gen-btn:hover { opacity: 0.88; }
+    .num-output { margin-top: 8px; display: none; }
+    .num-output.show { display: block; }
+    .out-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .out-label { font-size: 13px; color: var(--muted); }
+    .copy-btn { padding: 5px 12px; border-radius: 8px; border: 0.5px solid var(--c5); color: var(--c5d); background: var(--c5l); font-size: 12px; cursor: pointer; font-weight: 500; }
+    .nums-flex { display: flex; flex-wrap: wrap; gap: 5px; }
+    .npill { padding: 4px 10px; border-radius: 20px; font-size: 13px; border: 0.5px solid var(--border); background: #fff; color: var(--text); font-variant-numeric: tabular-nums; }
+    /* SEO CONTENT */
+    .seo-section { margin-top: 2rem; }
+    .seo-section h2 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+    .seo-section p { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 1.5rem; }
+    .feature-box { background: #fff; border-radius: 12px; border: 0.5px solid var(--border); padding: 14px 12px; text-align: center; }
+    .feature-box .icon { font-size: 24px; margin-bottom: 6px; }
+    .feature-box .title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .feature-box .desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+    /* PRIVACY */
+    .privacy-content h2 { font-size: 16px; font-weight: 600; margin-bottom: 10px; color: var(--text); }
+    .privacy-content h3 { font-size: 14px; font-weight: 600; margin: 16px 0 6px; color: var(--text); }
+    .privacy-content p, .privacy-content li { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 8px; }
+    .privacy-content ul { padding-left: 18px; }
+    footer { text-align: center; padding: 2rem 1rem 1rem; font-size: 12px; color: var(--muted); border-top: 0.5px solid var(--border); margin-top: 1rem; }
+    footer a { color: var(--muted); text-decoration: underline; cursor: pointer; }
+    @media(max-width:480px){ .feature-grid{grid-template-columns:1fr 1fr} .num-row{grid-template-columns:1fr 1fr 1fr} }
+  </style>
+</head>
+<body>
+
+<header>
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="14" fill="#EEEDFE"/><path d="M14 6l2.5 5 5.5.8-4 3.9.95 5.5L14 18.5l-4.95 2.7.95-5.5-4-3.9 5.5-.8z" fill="#7F77DD"/></svg>
+  <h1>RuletaOnline</h1>
+  <span>Gratis · Sin registro</span>
+</header>
+
+<div class="container">
+  <div class="nav">
+    <button class="nav-btn active" onclick="showTab('ruleta',this)">Ruleta</button>
+    <button class="nav-btn" onclick="showTab('intercambios',this)">Intercambios</button>
+    <button class="nav-btn" onclick="showTab('numeros',this)">Números</button>
+    <button class="nav-btn" onclick="showTab('privacidad',this)">Privacidad</button>
+  </div>
+
+  <!-- RULETA -->
+  <div class="panel active" id="tab-ruleta">
+    <div class="card">
+      <div class="sec-label">Modo de ruleta</div>
+      <div class="seg" id="wmode-seg">
+        <button class="seg-opt on" style="background:var(--c1);color:#fff" onclick="setWheelMode('normal',this)">Normal</button>
+        <button class="seg-opt" onclick="setWheelMode('grupos',this)">Grupos</button>
+      </div>
+      <div id="group-config-area" style="display:none">
+        <div class="group-config">
+          <label>Número de grupos:</label>
+          <input type="number" id="numGroups" value="2" min="2" max="20" oninput="updateGroupPreview()" />
+          <span class="group-preview" id="groupPreview"></span>
+        </div>
+      </div>
+      <div class="sec-label" style="margin-top:4px">Agregar participantes</div>
+      <div class="row" style="margin-bottom:10px">
+        <input type="text" id="optIn" placeholder="Escribe un nombre..." onkeydown="if(event.key==='Enter')addOpt()" style="width:auto;flex:1" />
+        <button class="pill-btn" onclick="addOpt()">+ Agregar</button>
+      </div>
+      <div class="chips" id="chipList"></div>
+    </div>
+    <div style="display:flex;justify-content:center;margin-bottom:8px">
+      <div style="position:relative">
+        <div style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;border-top:20px solid var(--c1)"></div>
+        <canvas id="wCanvas" width="280" height="280" style="border-radius:50%;display:block;box-shadow:0 4px 24px rgba(0,0,0,0.1)"></canvas>
+      </div>
+    </div>
+    <div class="result-display" id="wResult"><span class="placeholder">El resultado aparecerá aquí</span></div>
+    <div class="hist-row" id="histRow"></div>
+    <div id="groupsDisplay" style="margin-top:12px"></div>
+    <button class="spin-btn" id="spinBtn" onclick="spin()">Girar ruleta</button>
+
+    <!-- SEO CONTENT -->
+    <div class="seo-section">
+      <h2>Ruleta online gratis</h2>
+      <p>Gira nuestra ruleta virtual para tomar decisiones al azar, elegir ganadores en sorteos o asignar tareas en tu grupo. Agrega los nombres o opciones que quieras, gira y la ruleta elimina automáticamente lo que ya salió.</p>
+      <p>El <strong>modo grupos</strong> te permite dividir participantes en equipos según el orden de salida. Ideal para dinámicas escolares, juegos de empresa y torneos.</p>
+    </div>
+  </div>
+
+  <!-- INTERCAMBIOS -->
+  <div class="panel" id="tab-intercambios">
+    <div class="card">
+      <div class="sec-label">Participantes (uno por línea)</div>
+      <textarea id="swapIn" placeholder="Juan&#10;María&#10;Carlos&#10;Ana&#10;Luis"></textarea>
+      <div style="margin-top:10px">
+        <div class="seg">
+          <button class="seg-opt on" style="background:var(--c2);color:#fff" id="tog-pub" onclick="setSecretMode('public')">Público</button>
+          <button class="seg-opt" id="tog-sec" onclick="setSecretMode('secret')">Secreto</button>
+        </div>
+      </div>
+      <button class="primary-btn" onclick="generateSwap()">Generar intercambios</button>
+    </div>
+    <div id="swapOut"></div>
+
+    <div class="seo-section">
+      <h2>Organizador de intercambio de regalos</h2>
+      <p>Organiza tu <strong>amigo secreto</strong> o intercambio de regalos de forma rápida y justa. Agrega los participantes, elige modo público o secreto y el sistema asigna aleatoriamente quién le regala a quién, garantizando que nadie se asigne a sí mismo.</p>
+    </div>
+  </div>
+
+  <!-- NÚMEROS -->
+  <div class="panel" id="tab-numeros">
+    <div class="card">
+      <div class="sec-label">Configuración</div>
+      <div class="num-row">
+        <div class="num-field"><label>Desde</label><input type="number" id="nMin" value="1" /></div>
+        <div class="num-field"><label>Hasta</label><input type="number" id="nMax" value="10000" /></div>
+        <div class="num-field"><label>Cantidad</label><input type="number" id="nCount" value="10" min="1" max="500" /></div>
+      </div>
+      <div class="toggle-row">
+        <label class="chk-row"><input type="checkbox" id="noRep" checked /> Sin repetición</label>
+        <label class="chk-row"><input type="checkbox" id="sortN" /> Ordenar</label>
+      </div>
+      <button class="gen-btn" onclick="genNums()">Generar números</button>
+    </div>
+    <div class="num-output card" id="numOut">
+      <div class="out-header">
+        <span class="out-label" id="numLabel"></span>
+        <button class="copy-btn" onclick="copyNums()">Copiar</button>
+      </div>
+      <div class="nums-flex" id="numsGrid"></div>
+    </div>
+
+    <div class="seo-section">
+      <h2>Generador de números aleatorios</h2>
+      <p>Genera números aleatorios dentro del rango que necesites. Define el mínimo, máximo y cuántos números quieres. Activa la opción <strong>sin repetición</strong> para sorteos donde cada número solo puede salir una vez — ideal para rifas de hasta 10,000 boletos.</p>
+    </div>
+  </div>
+
+  <!-- PRIVACIDAD -->
+  <div class="panel" id="tab-privacidad">
+    <div class="card privacy-content">
+      <h2>Política de Privacidad</h2>
+      <p>Última actualización: enero 2025</p>
+
+      <h3>1. Información que recopilamos</h3>
+      <p>RuletaOnline <strong>no recopila ningún dato personal</strong>. La herramienta funciona completamente en tu navegador. Los nombres, opciones o números que introduces nunca se envían a ningún servidor.</p>
+
+      <h3>2. Cookies</h3>
+      <p>Actualmente no utilizamos cookies propias. En el futuro, si se integran anuncios de Google AdSense, Google puede usar cookies para mostrar anuncios relevantes. Puedes gestionar tus preferencias en <a href="https://adssettings.google.com" target="_blank" rel="noopener">adssettings.google.com</a>.</p>
+
+      <h3>3. Terceros</h3>
+      <p>La página está alojada en Vercel. Vercel puede registrar datos técnicos básicos como la dirección IP y el navegador utilizado para fines de seguridad y rendimiento. Consulta la política de privacidad de Vercel en <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">vercel.com/legal/privacy-policy</a>.</p>
+
+      <h3>4. Anuncios</h3>
+      <p>Esta página puede mostrar anuncios a través de Google AdSense. Google utiliza tecnologías como cookies para mostrar anuncios basados en tus visitas anteriores. Puedes optar por no recibir publicidad personalizada visitando <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">google.com/settings/ads</a>.</p>
+
+      <h3>5. Menores de edad</h3>
+      <p>Esta herramienta no está dirigida a menores de 13 años y no recopila conscientemente información de menores.</p>
+
+      <h3>6. Cambios a esta política</h3>
+      <p>Podemos actualizar esta política ocasionalmente. Te recomendamos revisarla periódicamente. El uso continuado de la herramienta implica la aceptación de los cambios.</p>
+
+      <h3>7. Contacto</h3>
+      <p>Si tienes preguntas sobre esta política de privacidad, puedes contactarnos a través de la página.</p>
+    </div>
+  </div>
+
+  <!-- FEATURES (visible en todas las pestañas para SEO) -->
+  <div class="feature-grid" id="featureGrid">
+    <div class="feature-box">
+      <div class="icon">🎡</div>
+      <div class="title">Ruleta gratis</div>
+      <div class="desc">Gira y elimina opciones automáticamente</div>
+    </div>
+    <div class="feature-box">
+      <div class="icon">🎁</div>
+      <div class="title">Amigo secreto</div>
+      <div class="desc">Intercambios justos con modo secreto</div>
+    </div>
+    <div class="feature-box">
+      <div class="icon">🎲</div>
+      <div class="title">Números random</div>
+      <div class="desc">Rifas y sorteos hasta 10,000 boletos</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 RuletaOnline · Gratis, sin registro, sin descargas</p>
+  <p style="margin-top:6px"><a onclick="showTabByName('privacidad')">Política de Privacidad</a></p>
+</footer>
+
+<script>
+const PAL=['#7F77DD','#1D9E75','#D85A30','#D4537E','#378ADD','#BA7517','#993556','#0F6E56','#993C1D','#534AB7'];
+const AVT=['#EEEDFE','#E1F5EE','#FAECE7','#FBEAF0','#E6F1FB','#FAEEDA','#EAF3DE'];
+const AVTD=['#3C3489','#085041','#712B13','#72243E','#0C447C','#633806','#27500A'];
+const GRP=[
+  {bg:'#EEEDFE',bd:'#7F77DD',tx:'#3C3489',mb:'#7F77DD'},
+  {bg:'#E1F5EE',bd:'#1D9E75',tx:'#085041',mb:'#1D9E75'},
+  {bg:'#FAECE7',bd:'#D85A30',tx:'#712B13',mb:'#D85A30'},
+  {bg:'#FBEAF0',bd:'#D4537E',tx:'#72243E',mb:'#D4537E'},
+  {bg:'#E6F1FB',bd:'#378ADD',tx:'#0C447C',mb:'#378ADD'},
+  {bg:'#FAEEDA',bd:'#BA7517',tx:'#633806',mb:'#BA7517'},
+  {bg:'#EAF3DE',bd:'#639922',tx:'#27500A',mb:'#639922'},
+];
+
+function showTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('featureGrid').style.display = id==='privacidad' ? 'none' : 'grid';
+}
+function showTabByName(id){
+  const btns=document.querySelectorAll('.nav-btn');
+  const tabs=['ruleta','intercambios','numeros','privacidad'];
+  const idx=tabs.indexOf(id);
+  if(idx>=0) showTab(id, btns[idx]);
+}
+
+// ===== RULETA =====
+let opts=[],elim=[],spinning=false,curAngle=0,wheelMode='normal',groupResults=[];
+function setWheelMode(m,btn){
+  wheelMode=m;
+  document.querySelectorAll('#wmode-seg .seg-opt').forEach(b=>{b.className='seg-opt';b.style.background='';b.style.color='';});
+  btn.className='seg-opt on';btn.style.background='var(--c1)';btn.style.color='#fff';
+  document.getElementById('group-config-area').style.display=m==='grupos'?'block':'none';
+  groupResults=[];document.getElementById('groupsDisplay').innerHTML='';updateGroupPreview();
+}
+function updateGroupPreview(){
+  if(wheelMode!=='grupos')return;
+  const ng=parseInt(document.getElementById('numGroups').value)||2;
+  if(opts.length<2){document.getElementById('groupPreview').textContent='';return;}
+  document.getElementById('groupPreview').textContent=`${opts.length} participantes → ${ng} grupos de ~${Math.ceil(opts.length/ng)}`;
+}
+function addOpt(){
+  const v=document.getElementById('optIn').value.trim();if(!v)return;
+  opts.push(v);document.getElementById('optIn').value='';renderChips();drawWheel();updateGroupPreview();
+}
+function removeOpt(i){opts.splice(i,1);renderChips();drawWheel();updateGroupPreview();}
+function renderChips(){
+  document.getElementById('chipList').innerHTML=opts.map((o,i)=>
+    `<div class="chip" style="background:${PAL[i%PAL.length]}">${o}<span class="x" onclick="removeOpt(${i})">✕</span></div>`
+  ).join('');
+}
+function drawWheel(hl){
+  const cv=document.getElementById('wCanvas'),ctx=cv.getContext('2d'),cx=140,cy=140,r=132;
+  ctx.clearRect(0,0,280,280);
+  if(!opts.length){
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle='#efefef';ctx.fill();
+    ctx.fillStyle='#aaa';ctx.font='13px sans-serif';ctx.textAlign='center';ctx.fillText('Agrega participantes',cx,cy);
+    return;
+  }
+  const arc=(Math.PI*2)/opts.length;
+  opts.forEach((o,i)=>{
+    const s=curAngle+arc*i,e=s+arc;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,s,e);ctx.closePath();
+    ctx.fillStyle=hl===i?'#FAC775':PAL[i%PAL.length];ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=2.5;ctx.stroke();
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(s+arc/2);ctx.textAlign='right';
+    ctx.fillStyle='#fff';ctx.font=`600 ${Math.min(13,85/opts.length+8)}px sans-serif`;
+    ctx.fillText(o.length>11?o.slice(0,10)+'…':o,r-10,5);ctx.restore();
+  });
+  ctx.beginPath();ctx.arc(cx,cy,15,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+  ctx.strokeStyle='#ddd';ctx.lineWidth=1;ctx.stroke();
+}
+function spin(){
+  if(spinning||opts.length<2)return;
+  spinning=true;document.getElementById('spinBtn').disabled=true;
+  document.getElementById('wResult').innerHTML='<span class="placeholder">Girando...</span>';
+  const total=(Math.PI*2)*(5+Math.random()*6),dur=3800,start=performance.now(),sa=curAngle;
+  function anim(now){
+    const p=Math.min((now-start)/dur,1),ease=1-Math.pow(1-p,4);
+    curAngle=sa+total*ease;drawWheel();
+    if(p<1){requestAnimationFrame(anim);return;}
+    curAngle=curAngle%(Math.PI*2);
+    const arc=(Math.PI*2)/opts.length,norm=(Math.PI*1.5-curAngle+Math.PI*2)%(Math.PI*2),wi=Math.floor(norm/arc)%opts.length;
+    drawWheel(wi);
+    const winner=opts[wi];
+    document.getElementById('wResult').innerHTML=`<span class="winner">${winner}</span>`;
+    elim.push(winner);
+    if(wheelMode==='grupos'){
+      const ng=Math.max(2,parseInt(document.getElementById('numGroups').value)||2);
+      const totalOrig=opts.length+elim.length,perGroup=Math.ceil(totalOrig/ng),gIdx=Math.floor((elim.length-1)/perGroup);
+      if(!groupResults[gIdx])groupResults[gIdx]=[];
+      groupResults[gIdx].push(winner);renderGroups(ng,totalOrig);
+    }
+    opts.splice(wi,1);
+    setTimeout(()=>{renderChips();drawWheel();renderHist();spinning=false;document.getElementById('spinBtn').disabled=false;updateGroupPreview();},1100);
+  }
+  requestAnimationFrame(anim);
+}
+function renderGroups(ng,totalOrig){
+  const perGroup=Math.ceil(totalOrig/ng);
+  let html='<div class="sec-label" style="margin-bottom:8px">Grupos formados</div>';
+  for(let g=0;g<ng;g++){
+    const members=groupResults[g]||[];if(!members.length)continue;
+    const c=GRP[g%GRP.length];
+    html+=`<div class="group-card" style="background:${c.bg};border-color:${c.bd}">
+      <div class="group-title" style="color:${c.tx}">Grupo ${g+1}</div>
+      <div class="group-members">${members.map((m,mi)=>`
+        <div class="gmember" style="background:rgba(255,255,255,0.7);color:${c.tx}">
+          <div class="order-badge" style="background:${c.mb};color:#fff">${g*perGroup+mi+1}</div>${m}
+        </div>`).join('')}
+      </div>
+    </div>`;
+  }
+  document.getElementById('groupsDisplay').innerHTML=html;
+}
+function renderHist(){
+  const h=document.getElementById('histRow');
+  if(!elim.length||wheelMode==='grupos'){h.innerHTML='';return;}
+  h.innerHTML='<span style="font-size:11px;color:var(--muted);margin-right:4px">Eliminados:</span>'+elim.map(e=>`<div class="hist-chip">${e}</div>`).join('');
+}
+drawWheel();
+
+// ===== INTERCAMBIOS =====
+let secretMode='public',swapPairs=[];
+function setSecretMode(m){
+  secretMode=m;
+  ['pub','sec'].forEach(k=>{
+    const b=document.getElementById('tog-'+k),on=((k==='pub'&&m==='public')||(k==='sec'&&m==='secret'));
+    b.className='seg-opt'+(on?' on':'');
+    b.style.background=on?'var(--c2)':'';
+    b.style.color=on?'#fff':'';
+  });
+}
+function getInit(n){return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();}
+function generateSwap(){
+  const lines=document.getElementById('swapIn').value.split('\n').map(l=>l.trim()).filter(Boolean);
+  if(lines.length<2){alert('Necesitas al menos 2 participantes');return;}
+  let shuffled=[...lines],tries=0;
+  do{shuffled.sort(()=>Math.random()-0.5);tries++;}while(shuffled.some((s,i)=>s===lines[i])&&tries<200);
+  swapPairs=lines.map((n,i)=>({from:n,to:shuffled[i]}));
+  renderSwap();
+}
+function renderSwap(){
+  const out=document.getElementById('swapOut');
+  if(secretMode==='public'){
+    out.innerHTML=`<div class="card"><div class="sec-label">Resultado del intercambio</div>${
+      swapPairs.map((p,i)=>{const ai=i%AVT.length;return `<div class="pair-row">
+        <div class="avatar" style="background:${AVT[ai]};color:${AVTD[ai]}">${getInit(p.from)}</div>
+        <span style="font-size:13px;font-weight:500;flex:1">${p.from}</span>
+        <span style="color:var(--muted);font-size:16px">→</span>
+        <span style="font-size:13px;font-weight:500;flex:1;text-align:right">${p.to}</span>
+        <div class="avatar" style="background:${AVT[(i+3)%AVT.length]};color:${AVTD[(i+3)%AVT.length]}">${getInit(p.to)}</div>
+      </div>`;}).join('')
+    }</div>`;
+  } else {
+    out.innerHTML=`<div class="card"><div class="sec-label">Modo secreto — cada quien revela su resultado</div>${
+      swapPairs.map((p,i)=>{const ai=i%AVT.length;return `<div style="border-radius:12px;border:0.5px solid var(--border);background:var(--bg);padding:10px 14px;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="avatar" style="background:${AVT[ai]};color:${AVTD[ai]}">${getInit(p.from)}</div>
+          <span style="font-size:14px;font-weight:500;flex:1">${p.from}</span>
+          <button class="reveal-btn" id="rev-${i}" onclick="revealSwap(${i})">Ver asignación</button>
+        </div>
+        <div id="ld-${i}" style="display:none;margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border)">
+          <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Le toca regalar a:</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="avatar" style="background:${AVT[(i+3)%AVT.length]};color:${AVTD[(i+3)%AVT.length]}">${getInit(p.to)}</div>
+            <span style="font-size:18px;font-weight:600">${p.to}</span>
+          </div>
+        </div>
+      </div>`;}).join('')
+    }</div>`;
+  }
+}
+function revealSwap(i){
+  const d=document.getElementById(`ld-${i}`),b=document.getElementById(`rev-${i}`);
+  if(d.style.display==='none'){d.style.display='block';b.textContent='Ocultar';}
+  else{d.style.display='none';b.textContent='Ver asignación';}
+}
+
+// ===== NÚMEROS =====
+let lastNums=[];
+function genNums(){
+  const min=parseInt(document.getElementById('nMin').value)||1;
+  const max=parseInt(document.getElementById('nMax').value)||10000;
+  const count=Math.min(parseInt(document.getElementById('nCount').value)||10,500);
+  const noRep=document.getElementById('noRep').checked;
+  const sort=document.getElementById('sortN').checked;
+  if(min>=max){alert('El mínimo debe ser menor que el máximo');return;}
+  if(noRep&&count>(max-min+1)){alert('No hay suficientes números únicos en ese rango');return;}
+  let nums=[];
+  if(noRep){
+    const pool=[];for(let i=min;i<=max;i++)pool.push(i);
+    for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+    nums=pool.slice(0,count);
+  } else {
+    for(let i=0;i<count;i++)nums.push(Math.floor(Math.random()*(max-min+1))+min);
+  }
+  if(sort)nums.sort((a,b)=>a-b);
+  lastNums=nums;
+  const out=document.getElementById('numOut');
+  out.className='num-output card show';
+  document.getElementById('numLabel').textContent=`${count} número${count>1?'s':''}${noRep?' únicos':''} del ${min.toLocaleString()} al ${max.toLocaleString()}`;
+  document.getElementById('numsGrid').innerHTML=nums.map(n=>`<div class="npill">${n.toLocaleString()}</div>`).join('');
+}
+function copyNums(){
+  navigator.clipboard.writeText(lastNums.join(', ')).then(()=>{
+    const b=document.querySelector('.copy-btn'),t=b.textContent;
+    b.textContent='Copiado!';setTimeout(()=>b.textContent=t,1500);
+  });
+}
+</script>
+</body>
+</html>
